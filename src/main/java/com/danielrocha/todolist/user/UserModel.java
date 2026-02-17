@@ -18,7 +18,7 @@ import lombok.Data;
 public class UserModel {
     
     @Id // Define o atributo abaixo como PK da tabela
-    @GeneratedValue(generator = "UUID") // O UUID fica responsável pela geração dos valores do id
+    @GeneratedValue(generator = "UUID") // Geração dos valores do id automaticamente
     private UUID id;
 
     // @Column(name = "usuário") renomearia na tabela o nome da coluna para usuário
