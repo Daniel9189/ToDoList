@@ -1,8 +1,13 @@
 package com.danielrocha.todolist.task;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +23,32 @@ public class TaskController {
     private ITaskRepository taskRepository;
 
     @PostMapping("/")
-    public TaskModel createTask(@RequestBody TaskModel taskModel, HttpServletRequest request) {
-        var idUserTask = request.getAttribute("idUser");
-        taskModel.setIdUser((UUID) idUserTask);
+    public ResponseEntity createTask(@RequestBody TaskModel taskModel, HttpServletRequest request) {
+        var idUser = request.getAttribute("idUser");
+        taskModel.setIdUser((UUID) idUser);
+
+        var currentDate = LocalDateTime.now();
+
+        //10/02/2026 - current
+        //10/01/2026 - startAt
+        if (currentDate.isAfter(taskModel.getStartAt()) || currentDate.isAfter(taskModel.getEndAt())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A data de início/data de término deve ser maior que a data atual");
+        }
+
+        //20/02/2026 - startAt
+        //19/02/2026 - endAt
+        if (taskModel.getStartAt().isAfter(taskModel.getEndAt())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A data de início deve ser menor que a data de término");
+        }
+
         var taskCreated = this.taskRepository.save(taskModel);
-        return taskCreated;
+        return ResponseEntity.status(HttpStatus.OK).body(taskCreated);
+    }
+
+    @GetMapping("/")
+    public List<TaskModel> list(HttpServletRequest request) {
+        var idUser = request.getAttribute("idUser");
+        var tasks = this.taskRepository.findByIdUser((UUID) idUser);
+        return tasks;
     }
 }
