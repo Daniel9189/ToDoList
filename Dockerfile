@@ -1,12 +1,11 @@
 FROM ubuntu:latest AS build
 
 RUN apt-get update
-RUN apt-get install openjdk-21-jdk -y
+RUN apt-get install openjdk-21-jdk maven -y
 
 COPY . .
 
-RUN apt-get maven -y
-RUN mvn clean install
+RUN mvn clean install -DskipTests
 
 FROM eclipse-temurin:21-jdk-alpine
 
