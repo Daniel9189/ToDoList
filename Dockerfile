@@ -8,7 +8,7 @@ COPY . .
 RUN apt-get maven -y
 RUN mvn clean install
 
-FROM eclipse-temurin:21-jdl-alpine
+FROM eclipse-temurin:21-jdk-alpine
 
 EXPOSE 8080
 
