@@ -28,7 +28,7 @@ Use ferramentas como Postman, Apidog, Insomnia ou Thunder Client para fazer requ
 
 ## 🔐 Autenticação
 
-A API utiliza **Basic Authentication**. Após criar um usuário, envie as credenciais pelo Authorization de cada requisição:
+A API utiliza **Basic Authentication**. Após criar um usuário, envie as credenciais pelo Authorization de cada requisição.
 
 ## 📍 Endpoints
 
