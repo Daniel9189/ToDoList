@@ -11,32 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
-
-/*
-Modificadores:
-public
-private
-protected 
-*/ 
+ 
 @RestController
 @RequestMapping("/users")
 public class UserController {
     
     @Autowired // O Spring cria o objeto pra você e entrega pronto para uso
     private IUserRepository userRepository;
-    /*
-    Tipos de retorno:
-    String
-    Integer
-    Double
-    Float
-    Char
-    Date
-    Void
-    */
-    /*
-    Body
-    */
+    
     @PostMapping("/")
     public ResponseEntity<Object> createUser(@RequestBody UserModel userModel) {
         var user = this.userRepository.findByUsername(userModel.getUsername());
