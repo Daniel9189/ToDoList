@@ -4,7 +4,7 @@ API REST para gerenciamento de tarefas construída com Spring Boot.
 
 ## 🚀 Funcionalidades
 
-- Autenticação de usuários com BCrypt
+- Autenticação de usuários
 - CRUD completo de tarefas
 - Filtro de tarefas por usuário
 - Validação de datas, username e título
