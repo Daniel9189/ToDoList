@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,7 +64,8 @@ public class TaskController {
 
         if (task == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("Tarefa não encontrada");        }
+                .body("Tarefa não encontrada");        
+        }
 
         if (!task.getIdUser().equals((UUID) idUser)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -75,4 +77,24 @@ public class TaskController {
 
         return ResponseEntity.ok().body(taskUpdated);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTask(HttpServletRequest request, @PathVariable UUID id) {
+        var task = this.taskRepository.findById(id).orElse(null);
+        var idUser = request.getAttribute("idUser");
+
+        if (task == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Tarefa não encontrada");        
+        }
+
+        if (!task.getIdUser().equals((UUID) idUser)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Usuário não tem permissão para deletar esta tarefa.");
+        }
+
+        this.taskRepository.deleteById(id);
+        return ResponseEntity.ok().body("Tarefa deletada com sucesso");
+    }
 }
+
