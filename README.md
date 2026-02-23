@@ -101,7 +101,3 @@ Authorization: inserir credenciais
 
 - GitHub: [@Daniel9189](https://github.com/Daniel9189)
 - Projeto: [ToDoList](https://github.com/Daniel9189/ToDoList)
-
----
-
-<p align="center">Desenvolvido com ☕ e Java</p>
